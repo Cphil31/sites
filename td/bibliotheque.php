@@ -1,12 +1,27 @@
 <?php
+
 require_once('Livre.php');
+
 require_once('Biblio.php');
 
 $laBible = new Livre("La Bible",1453);
 $leCoran = new Livre("Le Coran");
 $laTorah = new Livre("La Torah");
 $biblio = new Biblio("Alexandrie");
-$biblio->ajouterLivre($laTorah,$leCoran,$laBible);
+
+
+
+$biblio->ajouterLivre($laBible);
+$biblio->ajouterLivre($leCoran);
+$biblio->ajouterLivre($laTorah);
+
+/*comment faire pour ajouter 
+
+$biblio->ajouterLivre($laTorah,le coran la torah );
+
+essayer de faire un nouvell exercice
+ */
+
 
 ?>
 <!DOCTYPE html>
