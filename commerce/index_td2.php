@@ -71,10 +71,16 @@ and open the template in the editor.
                  * déterminer une variable =0 
                  * si la variable = 0 
                  * ne pas modifier id produit */
+                $image = "img/prod_{$prod->id_produit}_v.jpg";
+
+                if (file_exists($image)) {                
+                    $image="img/prod_{$prod->id_produit}_v.jpg";
+                } else {
+                  $image="img/prod_0_v.jpg";
+                }
                 ?>
                 <div class="blocProduit">
-                    <img src="img/prod_<?= $prod->id_produit ?>_v.jpg"/> 
-
+                    <img src="<?= $image?>"/> 
                     <div class="nom"> <?= $prod->nom ?> </div>
                 </div>
                 <?php
