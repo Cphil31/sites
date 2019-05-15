@@ -1,44 +1,5 @@
 <?php
-/* connexion a une base de données */
-const DSN = "mysql:dbname=commerce;
-host=localhost;
-charset=utf8mb4";
-const ID = 'root';
-const MDP = '';
-const OPTIONS = [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8mb4'",
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
-/* connexion a une base de données */
-
-/* au cas ou il y as erreur */
-try {
-    $pdo = new PDO(DSN, ID, MDP, OPTIONS);
-} catch (PDOExeception $e) {
-    echo "{$e->getMessage()}<br/>";
-    exit("connexxxion DB impossible");
-}
-/* au cas ou il y as erreur */
-
-$pdo = new PDO(DSN, ID, MDP, OPTIONS);
-/* connexion a une base de données */
-
-/* executer une requete  */
-
-/* $req = "UPDATE produit SET prix =prix / 2";
-  echo $pdo->exec($req); */
-
-/* executer une requete  */
-
-/* exercice */
-/*
-  1- faire une requete select qui selectionnes tout les produits
-  2- executer la requete
-  3- preciser el mode de récuperation (fetch obs)
-  4- récuperer les enregistrement sous forme d'un tableau
-  5- exploiter ce tableau php pour fabriquer un tableau HTML
-
- */
-
-
+require_once 'inc/csg.php';
 
 $req = "SELECT * FROM produit ORDER BY nom";
 $jeu = $pdo->query($req); /* methode PDO statement */
@@ -46,18 +7,15 @@ $jeu->setFetchMode(PDO::FETCH_OBJ);
 $tab = $jeu->fetchAll(); /* methode PDO statement */
 ?>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Commerce</title>
-
+        <title><?= TITRE ?></title>
+        <link href="css/commerce.css" rel="stylesheet">
+        <script type="text/javascript" src="js/index.js"></script>
     </head>
-    <link href="css/commerce.css" rel="stylesheet">
+
     <body>
         <header></header>
         <div id="container">
@@ -83,10 +41,12 @@ and open the template in the editor.
                  * $id= file_exists("img/prod_{$prod->id_produit}_v.jpg")? $prod->id_produit :0;
                  */
                 ?>
-                <div class="blocProduit">
+
+                <div class="blocProduit" onclick="detail(<?= $prod->id_produit ?>)">
                     <img src="<?= $image ?>"/> 
                     <div class="nom"> <?= $prod->nom ?> </div>
                 </div>
+
                 <?php
             }
             ?>
@@ -95,5 +55,7 @@ and open the template in the editor.
         </div>
 
         <footer></footer>
+
+
     </body>
 </html>
