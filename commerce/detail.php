@@ -30,10 +30,11 @@ and open the template in the editor.
 
             <div id="detailProduit">
                 <img src="img/prod_<?= $id ?>_p.jpg"/>
-                <div class="prix"> <?= $prod->prix ?></div>
+
                 <div class="ref">référérence <br/>
                     <?= $prod->ref ?>
                 </div>
+                <div class="prix"> <?= $prod->prix ?></div>
                 <div>
                     <div>
 
