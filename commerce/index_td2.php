@@ -73,14 +73,18 @@ and open the template in the editor.
                  * ne pas modifier id produit */
                 $image = "img/prod_{$prod->id_produit}_v.jpg";
 
-                if (file_exists($image)) {                
-                    $image="img/prod_{$prod->id_produit}_v.jpg";
+                if (file_exists($image)) {
+                    $image = "img/prod_{$prod->id_produit}_v.jpg";
                 } else {
-                  $image="img/prod_0_v.jpg";
+                    $image = "img/prod_0_v.jpg";
                 }
+                /*
+                 * Correction 
+                 * $id= file_exists("img/prod_{$prod->id_produit}_v.jpg")? $prod->id_produit :0;
+                 */
                 ?>
                 <div class="blocProduit">
-                    <img src="<?= $image?>"/> 
+                    <img src="<?= $image ?>"/> 
                     <div class="nom"> <?= $prod->nom ?> </div>
                 </div>
                 <?php
