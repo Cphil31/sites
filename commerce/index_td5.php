@@ -1,11 +1,8 @@
 <?php
 require_once 'inc/csg.php';
-require_once 'class/produit.php';
-
-$req = "SELECT * FROM produit ORDER BY nom";
-$jeu = $pdo->query($req); /* methode PDO statement */
-$jeu->setFetchMode(PDO::FETCH_OBJ);
-$tab = $jeu->fetchAll(); /* methode PDO statement */
+require_once 'class/Produit.php';
+require_once 'class/Categorie.php';
+$tab = Produit::tous();
 ?>
 <!DOCTYPE html>
 
@@ -25,27 +22,27 @@ $tab = $jeu->fetchAll(); /* methode PDO statement */
             </div>
 
             <?php
-            foreach ($tab as $prod) {
+            foreach ($tab as $produit) {
                 /* file_exists(chemin du fichier) consigne: faire en sorte que si le fichier n'existe pas on as l'image d'interrgogation
-                 * déterminer une variable =0 
-                 * si la variable = 0 
+                 * déterminer une variable = 0
+                 * si la variable = 0
                  * ne pas modifier id produit */
-                $image = "img/prod_{$prod->id_produit}_v.jpg";
+                $image = "img/prod_{$produit->id_produit}_v.jpg";
 
                 if (file_exists($image)) {
-                    $image = "img/prod_{$prod->id_produit}_v.jpg";
+                    $image = "img/prod_{$produit->id_produit}_v.jpg";
                 } else {
                     $image = "img/prod_0_v.jpg";
                 }
                 /*
                  * Correction 
-                 * $id= file_exists("img/prod_{$prod->id_produit}_v.jpg")? $prod->id_produit :0;
+                 * $id= file_exists("img/prod_{$produit->id_produit}_v.jpg")? $produit->id_produit :0;
                  */
                 ?>
 
-                <div class="blocProduit" onclick="detail(<?= $prod->id_produit ?>)">
+                <div class="blocProduit" onclick="detail(<?= $produit->id_produit ?>)">
                     <img src="<?= $image ?>"/> 
-                    <div class="nom"> <?= $prod->nom ?> </div>
+                    <div class="nom"> <?= $produit->nom ?> </div>
                 </div>
 
                 <?php

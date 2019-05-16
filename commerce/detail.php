@@ -1,50 +1,43 @@
 <?php
-require_once 'inc/csg.php';
-$id_produit = isset($_GET['id_produit']) ? (int) $_GET['id_produit'] : 0; /* je récupere d'id sur le produit clické */
-$req = "SELECT * FROM produit WHERE id_produit= {$id_produit}";
-$jeu = $pdo->query($req); /* j'execute cette requete ' */
-$jeu->setFetchMode(PDO::FETCH_OBJ); /* mode d'execution de la requete */
-$prod = $jeu->fetch(); /* methode PDO  */
-$id = file_exists("img/prod_{$prod->id_produit}_p.jpg") ? $prod->id_produit : 0; /* si la photo existe tu me l'affiche ou id=0 */
+require_once 'inc/cfg.php';
+require_once 'class/Produit.php';
+require_once 'class/Categorie.php';
+$id_produit = filter_input(INPUT_GET, 'id_produit', FILTER_VALIDATE_INT, ['min_range' => 1]);
+if (!$id_produit) {
+    header('Location:indispo.php');
+    exit;
+}
+$req = "SELECT * FROM produit WHERE id_produit={$id_produit}";
+$jeu = $pdo->query($req);
+$jeu->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Produit::class);
+$produit = $jeu->fetch();
+$id = file_exists("img/prod_{$produit->id_produit}_p.jpg") ? $produit->id_produit : 0;
 ?>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Commerce</title>
+        <title><?= TITRE ?></title>
         <link href="css/commerce.css" rel="stylesheet" type="text/css"/>
     </head>
-
     <body>
         <header></header>
         <div id="container">
-
             <div class="categorie">
-                <a href="index_td2.php">Produits</a> &gt; <?= $prod->nom ?>
+                <a href="index_td6.php">Produits</a> > <?= $produit->getCategorie()->nom ?>
             </div>
 
             <div id="detailProduit">
-                <img src="img/prod_<?= $id ?>_p.jpg"/>
-
-                <div class="ref">référérence <br/>
-                    <?= $prod->ref ?>
-                </div>
-                <div class="prix"> <?= $prod->prix ?></div>
+                <img src="img/prod_<?= $id ?>_p.jpg" alt=""/>
                 <div>
-                    <div>
-
-                    </div>
-                    <div>
-
+                    <div class="prix"><?= $produit->prix ?></div>
+                    <div class="ref">RÃ©fÃ©rence<br/>
+                        <?= $produit->ref ?>
                     </div>
                 </div>
             </div>
 
-            <footer></footer>
+        </div>
+        <footer></footer>
     </body>
 </html>
