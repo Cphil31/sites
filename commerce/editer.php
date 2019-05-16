@@ -26,7 +26,7 @@ $tabCategorie = Categorie::tous();
 
 
                 <div class="item">
-                    <label>nom</label>
+                    <label>Categories</label>
                     <select name="id_categorie">
                         <?php
                         foreach ($tabCategorie as $categorie) {
@@ -68,5 +68,6 @@ $tabCategorie = Categorie::tous();
 
         </div>
         <footer></footer>
+        <script src="js/editer.js" type="text/javascript"></script>
     </body>
 </html>
