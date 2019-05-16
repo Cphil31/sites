@@ -11,6 +11,11 @@ $req = "SELECT * FROM produit WHERE id_produit={$id_produit}";
 $jeu = $pdo->query($req);
 $jeu->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Produit::class);
 $produit = $jeu->fetch();
+
+if (!$produit) {
+    header('Location:indispo.php');
+    exit;
+}
 $id = file_exists("img/prod_{$produit->id_produit}_p.jpg") ? $produit->id_produit : 0;
 ?>
 <!DOCTYPE html>
@@ -31,7 +36,7 @@ $id = file_exists("img/prod_{$produit->id_produit}_p.jpg") ? $produit->id_produi
                 <img src="img/prod_<?= $id ?>_p.jpg" alt=""/>
                 <div>
                     <div class="prix"><?= $produit->prix ?></div>
-                    <div class="ref">RÃ©fÃ©rence<br/>
+                    <div class="ref">Reference<br/>
                         <?= $produit->ref ?>
                     </div>
                 </div>
