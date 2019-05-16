@@ -22,7 +22,7 @@ $tabCategorie = Categorie::tous();
                 ?>
 
 
-                <div class="categorie"><img class="ico" src="img/ico_add.svg" onclick="editer(<?= $categorie->id_categorie ?>)"></img><?= $categorie->nom ?></div>
+                <div class="categorie"><img class="ico" src="img/ico_add.svg" onclick="editer(<?= $categorie->id_categorie ?>)"/><?= $categorie->nom ?></div>
 
 
                 <?php
