@@ -6,9 +6,24 @@ $opt = ['options' => ['min_range' => 1]];
 //créer un tableau d'erreur vide
 if (filter_input(INPUT_POST, 'submit')) {
     //TODO :recuperer  les données POST 
+      $nom = $_POST['nom'];
+      $ref= $_POST['ref'];
+      $prix= $_POST['prix']; 
     // verifier si id_categories entier strictement positif et  existant 
+    if (is_int(!is_null($_POST['id_categorie']) > 0)) {
+        $req = `INSERT INTO produit (id_produit,id_categorie,nom,ref,prix) VALUES (DEFAULT,1,$nom,$ref,$prix)`;
+        $pdo->exec($req);
+        
+        $jeu = $pdo->query($req);
+        $jeu->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Produit::class);
+        return $jeu->fetchAll();
+    } else {
+        
+    }
     // sinon, ajouter une erreur au tableau d'erreurs 
     // si données POST OK alors INSERT puis redirection vers index.php
+    // 
+    // if ($_POST)
     // vérifier si nom pas vide sinon ajouter une erreur au tableau d'erreurs 
     // vérifier si ref pas vide est pazs déja existant sinon ajouter une erreur au tableau d'erreurs 
     // vérifier si prix est positi et >100 
@@ -19,10 +34,10 @@ if (filter_input(INPUT_POST, 'submit')) {
 }
 
 
-if (!$id_categorie) {
-    header('location:index.php');
-    exit;
-}
+/* if (!$id_categorie) {
+  header('location:index_td6.php');
+  exit;
+  } */
 $tabCategorie = Categorie::tous();
 ?>
 <!DOCTYPE html>
