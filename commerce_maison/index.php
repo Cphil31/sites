@@ -1,6 +1,5 @@
 <?php
-require_once 'inc/csg.php';
-require_once 'class/produit.php';
+require_once 'inc/cfg.php';
 //je fait ma requete 
 $req = "SELECT * FROM produit ORDER BY nom";
 $jeu = $pdo->query($req); /* methode PDO statement */
@@ -24,19 +23,19 @@ $tab = $jeu->fetchAll(); /* methode PDO statement */
             <div class="categorie">
                 Produits
             </div>
-
+         
             <?php
             foreach ($tab as $prod) {
                 /* file_exists(chemin du fichier) consigne: faire en sorte que si le fichier n'existe pas on as l'image d'interrgogation
                  * déterminer une variable =0 
                  * si la variable = 0 
                  * ne pas modifier id produit */
-                $image = "img/prod_{$prod->id_produit}_v.jpg";
+                $image = "../commerce/img/prod_{$prod->id_produit}_v.jpg";
 
                 if (file_exists($image)) {
-                    $image = "img/prod_{$prod->id_produit}_v.jpg";
+                    $image = "../commerce/img/prod_{$prod->id_produit}_v.jpg";
                 } else {
-                    $image = "img/prod_0_v.jpg";
+                    $image = "../commerce/img/prod_0_v.jpg";
                 }
                 /*
                  * Correction 

@@ -11,8 +11,8 @@ if (!$produit->id_categorie) {
 }    //toutes les propriétés sont a null
 //
 if (filter_input(INPUT_POST, 'submit')) {//filter input est la fontion , input post est la  
-    //la variable $produit n'exiteras que dans le filter submit ; 
-    // elle n'existeras pas 
+//la variable $produit n'exiteras que dans le filter submit ; 
+// elle n'existeras pas 
     $produit->id_categorie = filter_input(INPUT_POST, 'id_categorie', FILTER_VALIDATE_INT, $opt); // on as récupéré id_catégories
     $produit->nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); // on as récupéré id_catégories
     $produit->ref = filter_input(INPUT_POST, ' ref ', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES); // on as récupéré id_catégories
@@ -37,18 +37,21 @@ if (filter_input(INPUT_POST, 'submit')) {//filter input est la fontion , input p
     }
 
     if (!$tabErreur) {
-        //inserer notre $produit dans la base de données le nouveau produit 
+//inserer notre $produit dans la base de données le nouveau produit 
         $req = `INSERT INTO produit VALUES (DEFAULT,{$produit->id_categorie},{$pdo->quote->nom},{$pdo->quote->ref},{$pdo->quote->ref})`; //quote :proteger+-
         $pdo->exec($req); // notre produit est envoyé dans la base de données 
 
         header('Location:index_td6.php');
         exit;
-        //si les données sont pas bonnes on ne fais aps l'insertion
+//si les données sont pas bonnes on ne fais aps l'insertion
     }
-    //créer un tableau d'erreurs vide 
-    //TODO :recuperer  les données POST 
-    // verifier si id_categories entier strictement positif et  existant 
-    //is_int($_idcategorie)
+//créer un tableau d'erreurs vide 
+//TODO :recuperer  les données POST 
+    $nom = $_POST['nom'];
+    $ref = $_POST['ref'];
+    $prix = $_POST['prix'];
+// verifier si id_categories entier strictement positif et  existant 
+    _idcategorie)
     //
     //if (is_int(!is_null($_POST['id_categorie']) > 0)) {
     /*
@@ -60,9 +63,21 @@ if (filter_input(INPUT_POST, 'submit')) {//filter input est la fontion , input p
       $jeu = $pdo->query($req);
       $jeu->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Produit::class);
       return $jeu->fetchAll();
-      } else { */
+      } else { */ === === = if (is_int(!is_null($_POST['id_categorie']) > 0)) {
+        $req = `INSERT INTO produit (id_produit,id_categorie,nom,ref,prix) VALUES (DEFAULT,1,$nom,$ref,$prix)`;
+        $pdo->exec($req);
+
+        $jeu = $pdo->query($req);
+        $jeu->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Produit::class);
+        return $jeu->fetchAll();
+    } else {
+        
+    }
+
     // sinon, ajouter une erreur au tableau d'erreurs 
     // si données POST OK alors INSERT puis redirection vers index.php
+    // 
+    // if ($_POST)
     // vérifier si nom pas vide sinon ajouter une erreur au tableau d'erreurs 
     // vérifier si ref pas vide est pazs déja existant sinon ajouter une erreur au tableau d'erreurs 
     // vérifier si prix est positi et >100 
@@ -77,6 +92,10 @@ if (!$produit->id_categorie) {
     header('location:indispo.php');
     exit;
 }
+/* if (!$id_categorie) {
+  header('location:index_td6.php');
+  exit;
+  } */
 $tabCategorie = Categorie::tous();
 ?>
 <!DOCTYPE html>
@@ -98,10 +117,10 @@ $tabCategorie = Categorie::tous();
                 <div class="item">
                     <label>Categories</label>
                     <select name="id_categorie">
-                        <?php
-                        foreach ($tabCategorie as $categorie) {
-                            $selected = $categorie->id_categorie == $produit->id_categorie ? 'selected="selected"' : '';
-                            ?>
+<?php
+foreach ($tabCategorie as $categorie) {
+    $selected = $categorie->id_categorie == $produit->id_categorie ? 'selected="selected"' : '';
+    ?>
                             <option value ="<?= $categorie->id_categorie ?>" <?= $selected ?> ><?= $categorie->nom ?></option>
                             <?php
                         }

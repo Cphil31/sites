@@ -32,7 +32,7 @@ $pdo = new PDO(DSN, ID, MDP, OPTIONS);
 /*
   1- faire une requete select qui selectionnes tout les produits
   2- executer la requete
-  3- preciser el mode de récuperation (fetch obs)
+  3- preciser le mode de récuperation (fetch obJ)
   4- récuperer les enregistrement sous forme d'un tableau
   5- exploiter ce tableau php pour fabriquer un tableau HTML
 
