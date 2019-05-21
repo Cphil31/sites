@@ -12,12 +12,19 @@ function modifier(evt, id_produit) {
 }
 function supprimer (evt,id_produit){
     evt.stopPropagation();
-    location = `indispo.php?id_produit=${id_produit}`;
-    
-    fetch(` supprimer.php`)
-              .then(response => response.json())
-              .then((json) => {
-                  console.log('json');
-          });
-    
+    if(confirm("vraiment supprimer")){
+        url=`supprimer.php?id_produit=${id_produit}`;
+       fetch(url)
+         .then(response=>{ //response : valeur d'aboutissement de la promesse 
+          if (response.ok){
+              
+              location.reload();
+          }
+              
+    })
+            .catch(error =>console.error(error));
+    }
+  
+  
+  
 }

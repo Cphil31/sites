@@ -67,7 +67,6 @@ if (filter_input(INPUT_POST, 'submit')) {//filter input est la fontion , input p
     if (is_int(!is_null($_POST['id_categorie']) > 0)) {
         $req = `INSERT INTO produit (id_produit,id_categorie,nom,ref,prix) VALUES (DEFAULT,1,$nom,$ref,$prix)`;
         $pdo->exec($req);
-
         $jeu = $pdo->query($req);
         $jeu->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Produit::class);
         return $jeu->fetchAll();
