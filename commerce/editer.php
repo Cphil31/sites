@@ -51,7 +51,7 @@ if (filter_input(INPUT_POST, 'submit')) {//filter input est la fontion , input p
     $ref = $_POST['ref'];
     $prix = $_POST['prix'];
 // verifier si id_categories entier strictement positif et  existant 
-    _idcategorie)
+    ($idcategorie)
     //
     //if (is_int(!is_null($_POST['id_categorie']) > 0)) {
     /*
@@ -63,7 +63,8 @@ if (filter_input(INPUT_POST, 'submit')) {//filter input est la fontion , input p
       $jeu = $pdo->query($req);
       $jeu->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Produit::class);
       return $jeu->fetchAll();
-      } else { */ === === = if (is_int(!is_null($_POST['id_categorie']) > 0)) {
+      } else { */
+    if (is_int(!is_null($_POST['id_categorie']) > 0)) {
         $req = `INSERT INTO produit (id_produit,id_categorie,nom,ref,prix) VALUES (DEFAULT,1,$nom,$ref,$prix)`;
         $pdo->exec($req);
 
@@ -117,10 +118,10 @@ $tabCategorie = Categorie::tous();
                 <div class="item">
                     <label>Categories</label>
                     <select name="id_categorie">
-<?php
-foreach ($tabCategorie as $categorie) {
-    $selected = $categorie->id_categorie == $produit->id_categorie ? 'selected="selected"' : '';
-    ?>
+                        <?php
+                        foreach ($tabCategorie as $categorie) {
+                            $selected = $categorie->id_categorie == $produit->id_categorie ? 'selected="selected"' : '';
+                            ?>
                             <option value ="<?= $categorie->id_categorie ?>" <?= $selected ?> ><?= $categorie->nom ?></option>
                             <?php
                         }
