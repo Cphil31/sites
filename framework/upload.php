@@ -12,8 +12,20 @@ class Upload {
     public $typeMIME;
     public $tabErreur = [];
 
-    public function __construct() {
-        
+    public function __construct($nomChamp, $tabMIME = []) {
+        $this->$nomChamp = $nomChamp;
+        $this->$TabMINE = $TABMINE;
+
+        if (!isset($_FILES[$this->nomchamp])) {
+            $this->tabErreur[] = "Aucun upload.";
+            return;
+        }
+        $file = $_FILES[$this->nomchamp];
+        $this->nomclient = $file['name'];
+        $this->extension = (new SplFileInfo($this->nomClient))->getExtension();
+        //TODO  
+        // Affectatyion des propriétés suivzntes .
+        // Vérification des erreurs et ajout des messages en francais 
     }
 
     public function sauver($chemin) {
