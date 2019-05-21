@@ -7,6 +7,7 @@ class Produit {
     public $nom;
     public $ref;
     public $prix;
+    private $categorie = null;
 
     public function __construct($id_produit = null, $id_categorie = null, $nom = null, $ref = null, $prix = null) {
         $this->id_produit = $id_produit;
@@ -17,11 +18,15 @@ class Produit {
     }
 
     public function getCategorie() {
+
         global $pdo;
-        $req = "SELECT * FROM categorie WHERE id_categorie={$this->id_categorie}";
-        $jeu = $pdo->query($req);
-        $jeu->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Categorie::class);
-        return $jeu->fetch();
+        if ($this->categorie) {
+            $req = "SELECT * FROM categorie WHERE id_categorie={$this->id_categorie}";
+            $jeu = $pdo->query($req);
+            $jeu->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Categorie::class);
+            $this->categorie = $jeu->fetch();
+        }
+        return $this->categorie;
     }
 
     public function refExiste() {
