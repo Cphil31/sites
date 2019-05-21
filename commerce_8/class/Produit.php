@@ -17,10 +17,10 @@ class Produit {
         $this->prix = $prix;
     }
 
-    public function getCategorie() {
+    public function get_categorie() {
 
         global $pdo;
-        if ($this->categorie) {
+        if (!$this->categorie) {
             $req = "SELECT * FROM categorie WHERE id_categorie={$this->id_categorie}";
             $jeu = $pdo->query($req);
             $jeu->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Categorie::class);
@@ -28,6 +28,14 @@ class Produit {
         }
         return $this->categorie;
     }
+
+// td10
+    public function __get($nom) {
+        $methode = "get_{$nom}";
+        return $this->$methode();
+    }
+
+    // td10
 
     public function refExiste() {
         global $pdo;
