@@ -35,14 +35,14 @@ $tab = $jeu->fetch();
 
         <div id="container">
             <div class="categorie">
-                <a href="index.php">produit</a> &gt; <?= $tab->nom ?>
+                <a href="index.php">Produit</a> &gt; <?= $tab->nom ?>
             </div>
 
             <div class="blocProduit" >
                 <img src="../commerce/img/prod_<?= $id_produit ?>_p.jpg" alt=""/>
 
                 <div class="prix">Nom : <?= $tab->nom ?></div>
-                <div class="prix">ref : <?= $tab->ref ?></div>
+                <div class="ref">ref : <?= $tab->ref ?></div>
                 <div class="prix">prix : <?= $tab->prix ?></div>
 
             </div>
