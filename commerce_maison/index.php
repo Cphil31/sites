@@ -13,7 +13,7 @@ try {
 }
 //executer une requete select
 
-$req = "SELECT * FROM produit";
+$req = "SELECT * FROM produit ORDER BY nom DESC";
 $jeu = $pdo->query($req); //je fais ma requetes sur base de données
 $jeu->setFetchMode(PDO::FETCH_OBJ);
 $tab = $jeu->fetchAll();
