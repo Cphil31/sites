@@ -1,4 +1,6 @@
 <?php
+require_once 'class/Categorie.php';
+require_once 'class/Produit.php';
 const TITRE = "LOWA";
 // Connexion DB
 const DSN = "mysql:dbname=commerce;host=localhost;charset=utf8mb4";
@@ -15,23 +17,14 @@ try {
 /*
   maniere non sécurisé:
   $id=isset($_GET['id'])?(int)$_GET['id']:0;
-
  */
-
-$req = "SELECT * FROM produit ORDER BY nom DESC";
-$jeu = $pdo->query($req); //je fais ma requetes sur base de données
-$jeu->setFetchMode(PDO::FETCH_OBJ);
-$tab = $jeu->fetchAll();
+$tab_produit = Produit::tous();
 //executer une requete select
 
 $id = isset($_GET['id_produit']) ? (int) $_GET['id_produit'] : 0;
 ?>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -44,7 +37,7 @@ and open the template in the editor.
         <div id="container">
 
             <?php
-            foreach ($tab as $produit) {
+            foreach ($tab_produit as $produit) {
                 ?>
 
                 <div class="blocProduit" onclick="detail(<?= $produit->id_produit ?>)" >
