@@ -21,6 +21,10 @@ $jeu = $pdo->query($req); //je fais ma requetes sur base de données
 $jeu->setFetchMode(PDO::FETCH_OBJ); // je selectionne le mode 
 $tab = $jeu->fetch();
 //je fais ma requete
+if (!$tab) {
+    header('Location:index.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 
