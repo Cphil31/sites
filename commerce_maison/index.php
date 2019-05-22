@@ -12,12 +12,19 @@ try {
     exit("Connexion DB impossible.");
 }
 //executer une requete select
+/*
+  maniere non sécurisé:
+  $id=isset($_GET['id'])?(int)$_GET['id']:0;
+
+ */
 
 $req = "SELECT * FROM produit ORDER BY nom DESC";
 $jeu = $pdo->query($req); //je fais ma requetes sur base de données
 $jeu->setFetchMode(PDO::FETCH_OBJ);
 $tab = $jeu->fetchAll();
 //executer une requete select
+
+$id = isset($_GET['id_produit']) ? (int) $_GET['id_produit'] : 0;
 ?>
 <!DOCTYPE html>
 <!--
@@ -33,27 +40,35 @@ and open the template in the editor.
     </head>
     <body>
 
-        <?php
-        foreach ($tab as $item) {
-            ?>
-            <div class="blocProduit" >
-
-            </div>
-            <img src="../commerce/img/prod_<?= $item->id_produit ?>_v.jpg" alt=""/>
-            <p>
-                nom : <?= $item->nom ?>
-            </p>
-            <p>
-                nom : <?= $item->ref ?>
-            </p>
-            <p>
-                nom : <?= $item->prix ?>
-            </p>
+        <header></header>
+        <div id="container">
 
             <?php
-        }
-        ?>
+            foreach ($tab as $produit) {
+                ?>
 
+                <div class="blocProduit" onclick="detail(<?= $produit->id_produit ?>)" >
+                    <img src="../commerce/img/prod_<?= $produit->id_produit ?>_v.jpg" alt=""/>
+                    <p class ="nom">
+                        nom : <?= $produit->nom ?>
+                    </p>
+                    <p>
+                        ref : <?= $produit->ref ?>
+                    </p>
+                    <p>
+                        prix : <?= $produit->prix ?> 
+                    </p>
+                </div>
+
+
+                <?php
+            }
+            ?>
+
+        </div>
+
+
+        <script src="js/index.js"></script>
 
     </body>
 </html>
