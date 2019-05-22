@@ -34,7 +34,9 @@ $tab = $jeu->fetch();
 
 
         <div id="container">
-
+            <div class="categorie">
+                <a href="index.php">produit</a> &gt; <?= $tab->nom ?>
+            </div>
 
             <div class="blocProduit" >
                 <img src="../commerce/img/prod_<?= $id_produit ?>_p.jpg" alt=""/>
