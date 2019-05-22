@@ -22,7 +22,7 @@ $jeu->setFetchMode(PDO::FETCH_OBJ); // je selectionne le mode
 $tab = $jeu->fetch();
 //je fais ma requete
 if (!$tab) {
-    header('Location:index.php');
+    header('Location:indispo.php');
     exit;
 }
 ?>
