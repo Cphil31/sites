@@ -36,7 +36,20 @@ and open the template in the editor.
         <?php
         foreach ($tab as $item) {
             ?>
-            <?= $item->nom ?>
+            <div class="blocProduit" >
+
+            </div>
+            <img src="../commerce/img/prod_<?= $item->id_produit ?>_v.jpg" alt=""/>
+            <p>
+                nom : <?= $item->nom ?>
+            </p>
+            <p>
+                nom : <?= $item->ref ?>
+            </p>
+            <p>
+                nom : <?= $item->prix ?>
+            </p>
+
             <?php
         }
         ?>
