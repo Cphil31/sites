@@ -18,7 +18,8 @@ try {
   maniere non sécurisé:
   $id=isset($_GET['id'])?(int)$_GET['id']:0;
  */
-$tab_produit = Produit::tous();
+
+$tab_categorie = Categorie::tous();
 //executer une requete select
 
 $id = isset($_GET['id_produit']) ? (int) $_GET['id_produit'] : 0;
@@ -35,25 +36,28 @@ $id = isset($_GET['id_produit']) ? (int) $_GET['id_produit'] : 0;
 
         <header></header>
         <div id="container">
-
             <?php
-            foreach ($tab_produit as $produit) {
+            foreach ($tab_categorie as $categorie) {
                 ?>
-
-                <div class="blocProduit" onclick="detail(<?= $produit->id_produit ?>)" >
-                    <img src="../commerce/img/prod_<?= $produit->id_produit ?>_v.jpg" alt=""/>
-                    <p class ="nom">
-                        nom : <?= $produit->nom ?>
-                    </p>
-                    <p>
-                        ref : <?= $produit->ref ?>
-                    </p>
-                    <p>
-                        prix : <?= $produit->prix ?> 
-                    </p>
+                <div class="categorie">
+                    <?= $categorie->nom ?>
                 </div>
+                <?php
+                foreach ($categorie->getTabProduit() as $produit) {
+                    ?>
+
+                    <div class="blocProduit" onclick="detail(<?= $produit->id_produit ?>)" >
+                        <img src="../commerce/img/prod_<?= $produit->id_produit ?>_v.jpg" alt=""/>
+                        <p class ="nom">
+                            nom : <?= $produit->nom ?>
+                        </p>
+
+                    </div>
 
 
+                    <?php
+                }
+                ?>
                 <?php
             }
             ?>

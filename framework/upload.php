@@ -24,7 +24,7 @@ class Upload {
         $this->nomclient = $file['name'];
         $this->extension = (new SplFileInfo($this->nomClient))->getExtension();
         //TODO  
-        // Affectatyion des propriétés suivzntes .
+        // Affectation des propriétés suivzntes .
         // Vérification des erreurs et ajout des messages en francais 
     }
 

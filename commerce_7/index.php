@@ -31,7 +31,6 @@ $tabCategorie = Categorie::tous();
 
                         <img src="img/ico_edit.svg" class="ico editer" onclick="modifier(event,<?= $produit->id_produit ?>)"/>
 
-
                     </div>
                     <?php
                 }
