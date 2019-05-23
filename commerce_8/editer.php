@@ -2,6 +2,7 @@
 require_once 'inc/cfg.php';
 require_once 'class/Produit.php';
 require_once 'class/Categorie.php';
+require_once '../framework/Upload.php';
 $opt = ['options' => ['min_range' => 1]];
 $tabErreur = [];
 $produit = new Produit();
@@ -11,7 +12,7 @@ if (filter_input(INPUT_POST, 'submit')) {
     $produit->nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
     $produit->ref = filter_input(INPUT_POST, 'ref', FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
     $produit->prix = filter_input(INPUT_POST, 'prix', FILTER_VALIDATE_FLOAT);
-    if (!$produit->id_categorie || !$produit->getCategorie()) {
+    if (!$produit->id_categorie || !$produit->categorie) {
         $tabErreur[] = "La catégorie est absente ou invalide.";
     }
     if (!$produit->nom || mb_strlen($produit->nom) > 50) {
@@ -24,6 +25,11 @@ if (filter_input(INPUT_POST, 'submit')) {
         $tabErreur[] = "Le prix est absent ou invalide.";
     }
     if (!$tabErreur) {
+        $upload = new Upload('photo', TAB_MIME);
+        var_dump($upload->tabErreur);
+        $upload->sauver('img/photo.jpg');
+        var_dump($upload->tabErreur);
+        exit;
 
         $id_produit = $produit->id_produit ?: 'DEFAULT';
 
@@ -66,7 +72,7 @@ $tabCategorie = Categorie::tous();
             <!-- TODO : afficher les éventuelles erreurs. -->
             <div class="categorie">Editer un produit</div>
             <div class="erreur"><?= implode('<br/>', $tabErreur) ?></div>
-            <form name="form1" action="editer.php" method="post">
+            <form name="form1" action="editer.php" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="id_produit" value="<?= $produit->id_produit ?>"/>
                 <div class="item">
                     <label>Catégorie</label>
@@ -81,6 +87,7 @@ $tabCategorie = Categorie::tous();
                         ?>
                     </select>
                 </div>
+
                 <div class="item">
                     <label>Nom</label>
                     <input name="nom" value="<?= $produit->nom ?>" maxlength="50" required="required"/>
@@ -94,13 +101,26 @@ $tabCategorie = Categorie::tous();
                     <input type="number" name="prix" value="<?= $produit->prix ?>" min="0" max="999.99" step="0.01" required="required"/>
                 </div>
                 <div class="item">
+                    <label>Photo.jpeg</label>
+                    <input id="photo" type="file" name="photo" onchange="afficherPhoto(this.files)">
+                    <input type="button" value="Parcourir ..."  onclick="click(this.form.photo.click())">
+                </div>
+                <div class="item">
                     <label></label>
                     <input type="button" value="Annuler" onclick="annuler()"/>
                     <input type="submit" name="submit" value="Valider"/>
+
                 </div>
+
             </form>
+            <div id="vignette"></div>
         </div>
         <footer></footer>
+        <script>
+            const MAX_FILE_SIZE = <?= Upload::maxFileSize() ?>;
+            const TAB_MIME = ['<?= implode(",", TAB_MIME) ?>'];
+
+        </script>
         <script src="js/editer.js" type="text/javascript"></script>
     </body>
 </html>

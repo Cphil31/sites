@@ -1,6 +1,8 @@
 <?php
 
 const TITRE = "LOWA";
+//images
+const TAB_MIME = ['image/jpeg'];
 // Connexion DB
 const DSN = "mysql:dbname=commerce;host=localhost;charset=utf8mb4";
 const ID = 'root';

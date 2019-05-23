@@ -64,6 +64,9 @@ input, select{
 	padding: 2px;
 	font-size: 16px;
 }
+input[type="file"]{
+	font-weight: bold;
+}
 input[type="submit"]{
 	font-weight: bold;
 }
