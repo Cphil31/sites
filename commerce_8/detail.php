@@ -17,6 +17,7 @@ if (!$jeu->fetch()) {
     exit;
 }
 $id = file_exists("img/prod_{$produit->id_produit}_p.jpg") ? $produit->id_produit : 0;
+$maj = !$id ?: (new SplFileInfo("img/prod_{$id}_p.jpg"))->getMTime();
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,7 +33,7 @@ $id = file_exists("img/prod_{$produit->id_produit}_p.jpg") ? $produit->id_produi
                 <a href="index.php"><?= $produit->categorie->nom ?></a> &gt; <?= $produit->nom ?>
             </div>
             <div id="detailProduit">
-                <img src="img/prod_<?= $id ?>_p.jpg" alt=""/>
+                <img src="img/prod_<?= $id ?>_p.jpg?maj=<?= $maj ?>" alt=""/>
                 <div>
                     <div class="prix"><?= $produit->prix ?></div>
                     <div class="ref">référence<br/>

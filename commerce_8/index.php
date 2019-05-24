@@ -24,9 +24,10 @@ $tabCategorie = Categorie::tous();
                 <?php
                 foreach ($categorie->getTabProduit() as $produit) {
                     $id = file_exists("img/prod_{$produit->id_produit}_v.jpg") ? $produit->id_produit : 0;
+                    $maj = !$id ?: (new SplFileInfo("img/prod_{$id}_v.jpg"))->getMTime();
                     ?>
                     <div class="blocProduit" onclick="detail(<?= $produit->id_produit ?>)">
-                        <img src="img/prod_<?= $id ?>_v.jpg" alt=""/>
+                        <img src="img/prod_<?= $id ?>_v.jpg?maj=<?= $maj ?>" alt=""/>
                         <div class="nom"><?= $produit->nom ?></div>
                         <img class="ico editer" src="img/ico_edit.svg" onclick="modifier(event, <?= $produit->id_produit ?>)"/>
                         <img class="ico supprimer" src="img/ico_cancel.svg" onclick="supprimer(event,<?= $produit->id_produit ?>)"/>
