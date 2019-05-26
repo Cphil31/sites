@@ -1,58 +1,50 @@
 <?php
-const TITRE = "LOWA";
-// Connexion DB
-const DSN = "mysql:dbname=commerce;host=localhost;charset=utf8mb4";
-const ID = 'root';
-const MDP = '';
-const OPTIONS = [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8mb4'", PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
-try {
-    $pdo = new PDO(DSN, ID, MDP, OPTIONS); //elements de la base de données
-} catch (PDOException $e) {
-    echo "{$e->getMessage()}<br/>";
-    exit("Connexion DB impossible.");
-}
-// je récupere l'id du produit que j'ai cliqué 
-$opt = ['options' => ['min_range' => 1]];
-$id_produit = filter_input(INPUT_GET, 'id_produit', FILTER_VALIDATE_INT, $opt);
-// je récupere l'id du produit que j'ai cliqué 
-//je fais ma requete
-$req = "SELECT * FROM produit WHERE id_produit={$id_produit}";
-$jeu = $pdo->query($req); //je fais ma requetes sur base de données
-$jeu->setFetchMode(PDO::FETCH_OBJ); // je selectionne le mode 
-$tab = $jeu->fetch();
-//je fais ma requete
-if (!$tab) {
-    header('Location:indispo.php');
-    exit;
-}
-?>
-<!DOCTYPE html>
+require_once 'inc/cfg.php';
+require_once 'class/Categorie.php';
+require_once 'class/Produit.php';
+$id_produit = filter_input(INPUT_GET, 'id_produit', FILTER_VALIDATE_INT, ['min_range' => 1]);
 
+$req = "SELECT * FROM produit WHERE id_produit={$id_produit}";
+$jeu = $pdo->query($req);
+$jeu->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, Produit::class);
+$produit = $jeu->fetch();
+?>
+
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <link href="../commerce/css/commerce.css" rel="stylesheet" type="text/css"/>
+        <link href="../commerce_6/css/commerce.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <header></header>
+
 
 
         <div id="container">
             <div class="categorie">
-                <a href="index.php">Produit</a> &gt; <?= $tab->nom ?>
+                <a href="index.php">produit</a> > <?= $produit->getCategorie()->nom ?>  
             </div>
 
-            <div class="blocProduit" >
+            <div id="detailProduit">
                 <img src="../commerce/img/prod_<?= $id_produit ?>_p.jpg" alt=""/>
-
-                <div class="prix">Nom : <?= $tab->nom ?></div>
-                <div class="ref">ref : <?= $tab->ref ?></div>
-                <div class="prix">prix : <?= $tab->prix ?></div>
-
+                <div class="prix"><?= $produit->prix ?></div>
+                    <div class="ref">Reference<br/>
+                        <?= $produit->ref ?>
+                    </div>
+                <div>
+                </div>
             </div>
         </div>
 
 
+        <footer></footer>
 
 
     </body>
