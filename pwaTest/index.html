@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="manifest" href="manifest.json"> 
+    <script src="sw.js"></script>
+</head>
+<body>
+    <h1>
+Hello Moi c'est Phildev.
+    </h1>
+    <script>
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw-test/sw.js', { scope: '/sw-test/' }).then(function(reg) {
+              // registration worked
+              console.log('Registration succeeded. Scope is ' + reg.scope);
+            }).catch(function(error) {
+              // registration failed
+              console.log('Registration failed with ' + error);
+            });
+          };
+    </script>
+</body>
+</html>
